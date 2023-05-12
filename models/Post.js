@@ -3,6 +3,10 @@ const {
     Schema
 } = mongoose
 
+const Comment = require('./Comment')
+const User = require('./User')
+const Category = require('./Category')
+
 const postSchema = new Schema({
     title: {
         type: String,
@@ -25,22 +29,22 @@ const postSchema = new Schema({
         required: true,
     },
     thumbnail: String,
-    category:{
-        type:Schema.Types.ObjectId,
-        ref:'Category',
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: Category,
     },
     readTime: String,
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: User
     }],
     dislikes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: User
     }],
     comments: [{
         type: Schema.Types.ObjectId,
-        ref: 'Comment'
+        ref: Comment
     }]
 }, {
     timestamps: true
@@ -59,5 +63,5 @@ postSchema.index({
     }
 })
 
-const Post=mongoose.model('Post',postSchema);
-module.exports =Post
+const Post = mongoose.model('Post', postSchema);
+module.exports = Post

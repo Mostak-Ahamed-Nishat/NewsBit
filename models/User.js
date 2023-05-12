@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-
 const {
     Schema
 } = mongoose
+const Profile=require('./Profile')
 
 const userSchema = new Schema({
     username: {
@@ -22,7 +22,7 @@ const userSchema = new Schema({
     },
     profile: {
         type: Schema.Types.ObjectId,
-        ref: "Profile"
+        ref: Profile
     },
     profilePic: {
         type: String,

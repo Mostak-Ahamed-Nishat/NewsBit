@@ -3,20 +3,24 @@ const {
     Schema
 } = mongoose
 
+const Comment = require('./Comment')
+const User = require('./User')
+const Post = require('./Post')
+
 const commentsSchema=new Schema({
     body:{
         type:String,
-        ref:'Post',
+        ref:Post,
         required:true,
     },
     post:{
         type:Schema.Types.ObjectId,
-        ref:'Post',
+        ref:Post,
         required:true,
     },
     user:{
         type:Schema.Types.ObjectId,
-        ref:'User',
+        ref:User,
         required:true,
     },
     replies:[
@@ -25,7 +29,7 @@ const commentsSchema=new Schema({
                 type:String,
             },user:{
                 type:Schema.Types.ObjectId,
-                ref:'User',
+                ref:User,
                 required:true,
             },
             createdAt:{
