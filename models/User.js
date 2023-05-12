@@ -21,7 +21,7 @@ const userSchema = new Schema({
         required: true,
     },
     profile: {
-        type: mongoose.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Profile"
     },
     profilePic: {
