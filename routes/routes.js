@@ -8,7 +8,7 @@ const routes = [{
 },{
     path:'/',
     handler:(req,res,next)=>{
-        res.render('pages/home/index-2')
+        res.render('pages/home/index-2',{title:'NewsBit - News Magazine Newspaper'})
     }
 }]
 

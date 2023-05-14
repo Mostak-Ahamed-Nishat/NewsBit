@@ -3,9 +3,7 @@ const {
     Schema
 } = mongoose
 
-const Comment = require('./Comment')
-const User = require('./User')
-const Category = require('./Category')
+
 
 const postSchema = new Schema({
     title: {
@@ -31,20 +29,20 @@ const postSchema = new Schema({
     thumbnail: String,
     category: {
         type: Schema.Types.ObjectId,
-        ref: Category,
+        ref: 'Category',
     },
     readTime: String,
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: User
+        ref: 'User'
     }],
     dislikes: [{
         type: Schema.Types.ObjectId,
-        ref: User
+        ref: 'User'
     }],
     comments: [{
         type: Schema.Types.ObjectId,
-        ref: Comment
+        ref: 'Comment'
     }]
 }, {
     timestamps: true
