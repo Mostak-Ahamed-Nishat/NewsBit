@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cheerio": "^1.0.0-rc.12",
     "config": "^3.3.9",
     "connect-flash": "^0.1.1",

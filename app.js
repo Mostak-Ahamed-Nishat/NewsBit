@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const path = require('path')
 var mongoose = require('mongoose');
-
+var flash = require('connect-flash');
 
 //Internal Import Files
 const allRoutes = require('./routes/routes')
@@ -12,7 +12,7 @@ const allRoutes = require('./routes/routes')
 //Settings Middleware
 const middleware=[
     express.urlencoded({extended: true}),
-    express.json()
+    express.json(),
 ]
 app.use(middleware)
 
