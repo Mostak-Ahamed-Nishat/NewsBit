@@ -1,1 +1,1 @@
-module.exports = error=>error.message
+module.exports = error=>error.msg
