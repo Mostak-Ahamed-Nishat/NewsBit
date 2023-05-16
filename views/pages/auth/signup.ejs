@@ -5,39 +5,66 @@
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-7">
                 <div class="signup">
-                    <div class="text-center"><a href="index.html"><img src="/public/frontend/images/logos/logo.png" alt="" class="img-fluid"></a></div>
+                    <div class="text-center"><a href="index.html"><img src="/public/frontend/images/logos/logo.png"
+                                alt="" class="img-fluid"></a></div>
                     <h3 class="mt-4">Sign Up Here</h3>
                     <p class="mb-5">Join with us and feel better</p>
                     <form action="/auth/signup" method="POST" class="signup-form row">
-                        
+
+                        <!-- First name -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control" id="fname" name="fname" placeholder="First name">
+                                <input type="text" class="form-control" id="fname" name="fname"
+                                    value="<%=user.fname && user.fname %>" placeholder="First name">
+                                <% if(error.fname){  %>
+                                <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                    aria-hidden="true"><%=error.fname  %></span>
+                                <%}  %>
                             </div>
                         </div>
+                        <!-- Last name -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" id="lname" name="lname" class="form-control" placeholder="Last Name">
+                                <input type="text" id="lname" name="lname" class="form-control" value="<%=user.fname && user.lname %>"  placeholder="Last Name">
+                                <% if(error.lname){  %>
+                                    <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                        aria-hidden="true"><%=error.lname  %></span>
+                                    <%}  %>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" name="email" id="email" placeholder="Enter a valid mail">
+                                <input type="text" class="form-control" name="email" id="email" value="<%=user.email && user.email %>"
+                                    placeholder="Enter a valid mail">
+                                    <% if(error.email){  %>
+                                        <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                            aria-hidden="true"><%=error.email  %></span>
+                                        <%}  %>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="A strong password">
+                                <input type="password" class="form-control" id="password" name="password" value="<%=user.password && user.password %>"
+                                    placeholder="A strong password">
+                                    <% if(error.password){  %>
+                                        <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                            aria-hidden="true"><%=error.password  %></span>
+                                        <%}  %>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="confirmPassword">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Password and confirm password must be same">
+                                <input type="password" class="form-control" id="confirmPassword" value="<%=user.confirmPassword && user.confirmPassword %>" name="confirmPassword"
+                                    placeholder="Password and confirm password must be same">
+                                    <% if(error.confirmPassword){  %>
+                                        <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                            aria-hidden="true"><%=error.confirmPassword  %></span>
+                                        <%}  %>
                             </div>
                         </div>
                         <div class="col-md-12">

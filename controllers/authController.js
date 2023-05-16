@@ -9,7 +9,9 @@ const bcrypt = require('bcrypt');
 //Get Signup page 
 exports.signUpGetController = (req, res, next) => {
     res.render('pages/auth/signup', {
-        title: 'Signup NewsBit'
+        title: 'Signup NewsBit',
+        user: '',
+        error: ''
     })
 }
 
@@ -17,20 +19,69 @@ exports.signUpGetController = (req, res, next) => {
 //Post Signup page 
 exports.signUpPostController = async (req, res, next) => {
 
+    //get all the data from body
+    const userData = {
+        fname,
+        lname,
+        email,
+        password,
+        confirmPassword
+    } = req.body
+
+
+
+    //Check if there any error that user provided
     let checkErrors = validationResult(req).formatWith(validationErrorFormatter)
+
+    //If there are any validation errors
     if (!checkErrors.isEmpty()) {
-        console.log(checkErrors.mapped());
+        const error = checkErrors.mapped()
+        res.render(200, 'pages/auth/signup', {
+            title: 'NewsBit Signup',
+            user: userData,
+            error
+        })
+
     } else {
-        console.log('Error not found');
+        //If there are not validation errors
+        let hashPassword;
+        //Create a hash password
+        if (password === confirmPassword) {
+            hashPassword = await bcrypt.hash(password, 10)
+        }
+
+        //If all required fields are present
+        if (hashPassword !== null && fname && lname && email) {
+            // Create a new to database
+            const createUser = new User({
+                username: lname.toLowerCase(),
+                email,
+                password: hashPassword
+            })
+            // Save the user in the database
+            const createdUser = await createUser.save()
+
+            // if user creation is successful
+            if (createdUser) {
+                res.redirect('login')
+            } else {
+                // if user creation is Failed
+                res.status = 500,
+                    res.render('pages/auth/signup', {
+                        title: 'NewsBit Signup',
+                        user: '',
+                        error: ''
+                    })
+                console.log('User Creation Failed');
+            }
+        }
     }
 
+    
 
-    res.render('pages/auth/signup',{
-        title:'NewsBit Signup'
-    })
+
 
 }
-
 
 //Get Login page 
 exports.loginGetController = (req, res, next) => {

@@ -30,7 +30,6 @@ app.use('/public/', express.static('./public'))
 allRoutes(app)
 
 
-
 //Not Find Handler
 app.use((req,res,next)=>{
     let error=new Error('Page not found')
