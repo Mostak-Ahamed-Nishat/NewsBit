@@ -76,47 +76,83 @@ exports.signUpPostController = async (req, res, next) => {
             }
         }
     }
-
-    
-
-
-
 }
+
+
 
 //Get Login page 
 exports.loginGetController = (req, res, next) => {
     res.render('pages/auth/login', {
-        title: "Login NewsBit"
+        title: "Login NewsBit",
+        user:'',
+        error:''
     })
 }
+
+
 //Post Login page 
 exports.loginPostController = async (req, res, next) => {
 
     // 1.Catch the user from login page
-    const {
+    const user = {
         email,
         password
     } = req.body
 
-
-    //1.Get the user from database by authenticate user
-    let authenticatedUser = await User.findOne({
-        email
-    })
-    //2.Check the password
-    let authenticatedPassword = await bcrypt.compare(password, authenticatedUser.password).then(function (result) {
-        return result
-    });
-
-    //3.If user and password are valid
-
-    if (authenticatedUser && authenticatedPassword === true) {
-        //3.1 set the user data to request url so that can check every request
-
-        console.log(req.session);
+    //Check if there any validation error
+    const checkErrors = validationResult(req).formatWith(validationErrorFormatter)
+    //if get validation error return with error message
+    if (!checkErrors.isEmpty()) {
+        const error = checkErrors.mapped()
+        console.log(error);
+        res.render(200, 'pages/auth/signup', {
+            title: 'NewsBit Signup',
+            user: user,
+            error
+        })
+    }
+    //if no validation error
+    try {
+        //get the user from Database
+        let validUser
+        if (user.email) {
+            validUser = await User.findOne({
+                email: user.email
+            });
+        }
+        //if user exist with this email
+        if (validUser) {
+            //check the password
+            const checkPassword = await bcrypt.compare(password,validUser.password).then(res=> res)
+            //If the password is correct
+            if (checkPassword) {
+                res.redirect('/')
+            } else {
+                //If password is incorrect
+                res.render('pages/auth/login', {
+                    title: 'Login NewsBit',
+                    user,
+                    error: {
+                        password: 'Wrong password',
+                    }
+                })
+            }
+        } else {
+            //if user does not exist with this email
+            res.render('pages/auth/login', {
+                title: 'Login NewsBit',
+                user,
+                error: {
+                    email: 'User not found Invalid Email '
+                }
+            })
+        }
+    } catch (error) {
+        res.status = 500
+        next(error.message)
     }
 
-    //4.If user and password are not valid
+
 
 }
 

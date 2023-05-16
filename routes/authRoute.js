@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const signupValidator=require('../validators/auth/signupValidator')
+const loginValidator=require('../validators/auth/loginValidator')
 
 //Auth signup middleware
 const {
@@ -22,7 +23,7 @@ router.post('/signup', signupValidator, signUpPostController)
 router.get('/login', loginGetController)
 
 //post Login Controller
-router.post('/login', loginPostController)
+router.post('/login',loginValidator, loginPostController)
 
 //get Logout Controller
 router.get('/logout', logout)
