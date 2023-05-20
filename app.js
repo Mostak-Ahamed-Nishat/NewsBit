@@ -1,19 +1,13 @@
 // External Import Files
 const express = require('express')
 const app = express()
-var mongoose = require('mongoose');
-
+const mongoose = require('mongoose');
+const middleware=require('./middlewares/middlewares')
 //Internal Import Files
 const allRoutes = require('./routes/routes')
 
-
-//Settings Middleware*****
-const middleware=[
-    express.urlencoded({extended: true}),
-    express.json(),
-]
-//User Middleware*****
-app.use(middleware)
+//Middleware*****
+middleware(app)
 
 
 //Setting View Engine
@@ -32,25 +26,30 @@ allRoutes(app)
 
 //Not Find Handler
 app.use((req,res,next)=>{
-    let error=new Error('Page not found')
+    let error=new Error('Page not found happened')
     error.status=404
     next(error)
 })
 
+//Set up default mongoose connection
+const CONNECTION_URI = 'mongodb://127.0.0.1/NewsBit';
 
 //All error handlers
-
 app.use((error,req,res,next)=>{
-    if(error.status===400){
-        res.render('Page not found')
+    if(error.status===404){
+        res.render('pages/404',{
+            title:'Page not found',
+        })//set not found page******
     }else{
-        res.render(error.message)
+        res.render('pages/500',{
+            title:'Server error',
+        }) //set server side error page******
     }
 })
 
 
-//Set up default mongoose connection
-const CONNECTION_URI = 'mongodb://127.0.0.1/NewsBit';
+
+
 //Set up default mongoose connection
 mongoose.set('strictQuery', true);
 

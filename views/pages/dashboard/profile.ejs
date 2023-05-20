@@ -1,0 +1,61 @@
+<!-- Include Profile header -->
+<%- include('../../partials/dashboard/profileHeader.ejs') %>
+
+<section id="about-us" class="py-5">
+    <div class="container">
+        <div class="row">
+            <!--left sidebar-->
+            <%- include('../../partials/dashboard/profileSidebar.ejs') %>
+            <!--Body Content Content-->
+            <div class="col-md-9">
+
+                <div>
+                    <div class="mr-auto">
+                        <h2 class="mb-3">
+                            Create Your Profile
+                        </h2>
+                    </div>
+
+                </div>
+
+                <div class="dashboard-area">
+                    <!-- Card Start -->
+                    <div class="card p-5">
+                        <form>
+                            <div class="form-group">
+                                <label for="fname">Full Name</label>
+                                <input type="text" class="form-control" id="fname" aria-describedby="fname">
+                                <!-- <small id="fname" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <input type="text" class="form-control" id="bio">
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-brands fa-facebook"></i>
+                                    </span>
+                                    <input type="text" class="form-control"
+                                        placeholder="Facebook Link" name="facebook" />
+                                        <!-- Error message -->
+                                    
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

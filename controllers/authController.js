@@ -84,8 +84,8 @@ exports.signUpPostController = async (req, res, next) => {
 exports.loginGetController = (req, res, next) => {
     res.render('pages/auth/login', {
         title: "Login NewsBit",
-        user:'',
-        error:''
+        user: '',
+        error: ''
     })
 }
 
@@ -104,8 +104,7 @@ exports.loginPostController = async (req, res, next) => {
     //if get validation error return with error message
     if (!checkErrors.isEmpty()) {
         const error = checkErrors.mapped()
-        console.log(error);
-        res.render(200, 'pages/auth/signup', {
+        res.render('pages/auth/signup', {
             title: 'NewsBit Signup',
             user: user,
             error
@@ -123,17 +122,37 @@ exports.loginPostController = async (req, res, next) => {
         //if user exist with this email
         if (validUser) {
             //check the password
-            const checkPassword = await bcrypt.compare(password,validUser.password).then(res=> res)
+            const checkPassword = await bcrypt.compare(password, validUser.password).then(res => res)
             //If the password is correct
             if (checkPassword) {
-                res.redirect('/')
+
+                //Set login user true
+                req.session.isLoggedIn = true
+                req.session.user = {
+                    username: validUser.username,
+                    email: validUser.email,
+                    id: validUser._id,
+                    profilePic: validUser.profilePic,
+                    createdAt: validUser.createdAt,
+                    updatedAt: validUser.updatedAt
+                }
+                req.session.save(err=>{
+                    if(err){
+                        err.status = 500
+                        next(err)
+                    }else{
+                        res.redirect('/profile')
+                    }
+                })
+                //  console.log(res.session.user);
+               
             } else {
                 //If password is incorrect
                 res.render('pages/auth/login', {
                     title: 'Login NewsBit',
                     user,
                     error: {
-                        password: 'Wrong password',
+                        password: 'Invalid Credentials',
                     }
                 })
             }
@@ -143,7 +162,7 @@ exports.loginPostController = async (req, res, next) => {
                 title: 'Login NewsBit',
                 user,
                 error: {
-                    email: 'User not found Invalid Email '
+                    email: 'Invalid Credentials'
                 }
             })
         }
@@ -157,6 +176,12 @@ exports.loginPostController = async (req, res, next) => {
 }
 
 //Logout page 
-exports.logout = (req, res, next) => {
-
+exports.logoutController = (req, res, next) => {
+    req.session.destroy(err => {
+        if (err) {
+            err.status = 500
+            next(new Error(err))
+        }
+        res.redirect('/auth/login')
+    })
 }

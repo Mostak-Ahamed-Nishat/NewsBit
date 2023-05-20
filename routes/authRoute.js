@@ -9,7 +9,7 @@ const {
     signUpPostController,
     loginGetController,
     loginPostController,
-    logout
+    logoutController
 } = require('../controllers/authController');
 
 
@@ -23,9 +23,9 @@ router.post('/signup', signupValidator, signUpPostController)
 router.get('/login', loginGetController)
 
 //post Login Controller
-router.post('/login',loginValidator, loginPostController)
+router.post('/login', loginPostController)
 
 //get Logout Controller
-router.get('/logout', logout)
+router.get('/logout', logoutController)
 
 module.exports = router
