@@ -1,11 +1,11 @@
 <!-- Include Profile header -->
-<%- include('../../partials/dashboard/profileHeader.ejs') %>
+<%- include('../../partials/dashboard/dashboardHeader.ejs') %>
 
 <section id="about-us" class="py-5">
     <div class="container">
         <div class="row">
             <!--left sidebar-->
-            <%- include('../../partials/dashboard/profileSidebar.ejs') %>
+            <%- include('../../partials/dashboard/dashboardSidebar.ejs') %>
             <!--Body Content Content-->
             <div class="col-md-9">
 
@@ -22,6 +22,21 @@
                     <!-- Card Start -->
                     <div class="card p-5">
                         <form>
+
+                            <div class="form-group">
+                                <img src="../../../public/backend/uploads/user.png" style="height: 300px; width: 300px;" alt="Profile Pics" class="img-thumbnail img-fluid"
+                                    id="profilePics"> <br>
+                                <form action="/uploads/profilePics" class="my-4" id="profilePicsForm">
+                                    
+                                    <input type="file" class="my-2"  name="profilePics" id="profilePicsFile" accept="img/*">
+                                    <!-- User code -->
+                              
+                                    <input type="button" class="btn btn-danger" id="removeProfilePics"
+                                        value="Remove Pic">
+                                </form>
+                            </div>
+
+
                             <div class="form-group">
                                 <label for="fname">Full Name</label>
                                 <input type="text" class="form-control" id="fname" aria-describedby="fname">
@@ -32,28 +47,62 @@
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" disabled>
                             </div>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="title" class="form-control" id="title">
+                            </div>
 
                             <div class="form-group">
                                 <label for="bio">Bio</label>
                                 <input type="text" class="form-control" id="bio">
                             </div>
+                            <!-- facebook -->
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="fa-brands fa-facebook"></i>
                                     </span>
-                                    <input type="text" class="form-control"
-                                        placeholder="Facebook Link" name="facebook" />
-                                        <!-- Error message -->
-                                    
+                                    <input type="text" class="form-control" placeholder="Facebook Link"
+                                        name="facebook" />
+                                    <!-- Error message -->
                                 </div>
                             </div>
-
+                            <!-- twitter -->
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-brands fa-twitter"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="twitter" placeholder="Twitter Link"
+                                        name="twitter" />
+                                    <!-- -->
+                                </div>
+                            </div>
+                            <!-- github -->
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-brands fa-github"></i>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="Github Link" id="github"
+                                        name="github" />
+                                    <!-- -->
+                                </div>
+                            </div>
+                            <!-- Website -->
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-brands fa-internet-explorer"></i>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="Website Link" name="website"
+                                        id="website" />
+                                    <!-- Error message -->
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
-
-
                 </div>
             </div>
         </div>
