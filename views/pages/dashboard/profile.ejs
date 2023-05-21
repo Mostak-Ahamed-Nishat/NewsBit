@@ -8,14 +8,12 @@
             <%- include('../../partials/dashboard/dashboardSidebar.ejs') %>
             <!--Body Content Content-->
             <div class="col-md-9">
-
                 <div>
                     <div class="mr-auto">
                         <h2 class="mb-3">
                             Create Your Profile
                         </h2>
                     </div>
-
                 </div>
 
                 <div class="dashboard-area">
@@ -27,36 +25,63 @@
                                 <div class="form-group">
                                     <img src="../../../public/backend/uploads/user.png"
                                         style="height: 300px; width: 300px;" alt="Profile Pics"
-                                        class="img-thumbnail img-fluid" id="profilePics"> <br>
+                                        class="img-thumbnail img-fluid" id="profilePic"> <br>
                                     <form action="/uploads/profilePics" class="my-4" id="profilePicsForm">
-                                        <input type="file" class="my-2" name="profilePics" id="profilePicsFile"
+                                        <input type="file" class="my-2" name="profilePic" id="profilePic"
                                             accept="img/*">
+
                                         <input type="button" class="btn btn-danger" id="removeProfilePics"
                                             value="Remove Pic">
+                                        <!-- style:"display:userprofilePicincludedefaultpngnoneblock" -->
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <form method="POST" action="/profile/create-profile">
-                            <div class="form-group">
-                                <label for="fname">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" aria-describedby="fullName">
-                                <!-- <small id="fname" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                            </div>
+                        <form method="POST"
+                            action="<%=user.isProfile==true?'/dashboard/update-profile':'/dashboard/create-profile'  %>">
 
                             <div class="form-group">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" id="fName" value="<%=user.fName%>" name="fName"
+                                    aria-describedby="fName">
+                                <% if(error.fName){  %>
+                                <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                    aria-hidden="true"><%=error.fName%></span>
+                                <%}  %>
+                            </div>
+                            <div class="form-group">
+                                <label for="fname">Last Name</label>
+                                <input type="text" class="form-control" id="lName" name="lName" value="<%=user.lName%>"
+                                    aria-describedby="lName">
+                                <% if(error.lName){  %>
+                                <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                    aria-hidden="true"><%=error.lName%></span>
+                                <%}  %>
+                            </div>
+                            <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" disabled>
+                                <input type="email" value="<%=user.email%>" class="form-control" id="email" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="title" class="form-control" id="title">
+                                <input type="title" class="form-control" id="title" name="title"
+                                    value="<%=user.title%>">
+                                <div class="invalid-feedback"><%=error.title %></div>
+                                <% if(error.title){  %>
+                                <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                    aria-hidden="true"><%=error.title  %></span>
+                                <%}  %>
                             </div>
 
                             <div class="form-group">
                                 <label for="bio">Bio</label>
-                                <input type="text" class="form-control" id="bio" name="bio">
+                                <input type="text" class="form-control" id="bio" name="bio" value="<%=user.bio%>">
+                                <div class="invalid-feedback"><%=error.bio %></div>
+                                <% if(error.bio){  %>
+                                <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                    aria-hidden="true"><%=error.bio  %></span>
+                                <%}  %>
                             </div>
                             <!-- facebook -->
                             <div class="form-group">
@@ -64,9 +89,13 @@
                                     <span class="input-group-text">
                                         <i class="fa-brands fa-facebook"></i>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="Facebook Link"
-                                        name="facebook" id="facebook"/>
+                                    <input type="text" class="form-control" placeholder="Facebook Link" name="facebook"
+                                        id="facebook" value="<%=user.facebook%>" />
                                     <!-- Error message -->
+                                    <% if(error.facebook){  %>
+                                    <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                        aria-hidden="true"><%=error.facebook  %></span>
+                                    <%}  %>
                                 </div>
                             </div>
                             <!-- twitter -->
@@ -76,8 +105,12 @@
                                         <i class="fa-brands fa-twitter"></i>
                                     </span>
                                     <input type="text" class="form-control" id="twitter" placeholder="Twitter Link"
-                                        name="twitter" id="twitter" />
-                                    <!-- -->
+                                        name="twitter" id="twitter" value="<%=user.twitter%>" />
+                                    <!-- Error Message-->
+                                    <% if(error.twitter){  %>
+                                    <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                        aria-hidden="true"><%=error.twitter  %></span>
+                                    <%}  %>
                                 </div>
                             </div>
                             <!-- github -->
@@ -87,8 +120,12 @@
                                         <i class="fa-brands fa-github"></i>
                                     </span>
                                     <input type="text" class="form-control" placeholder="Github Link" id="github"
-                                        name="github" id="github"/>
-                                    <!-- -->
+                                        name="github" id="github" value="<%=user.github%>" />
+                                    <!--Error Message-->
+                                    <% if(error.github){  %>
+                                    <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                        aria-hidden="true"><%=error.github  %></span>
+                                    <%}  %>
                                 </div>
                             </div>
                             <!-- Website -->
@@ -98,11 +135,19 @@
                                         <i class="fa-brands fa-internet-explorer"></i>
                                     </span>
                                     <input type="text" class="form-control" placeholder="Website Link" name="website"
-                                        id="website" />
+                                        id="website" value="<%=user.website%>" />
                                     <!-- Error message -->
+                                    <% if(error.website){  %>
+                                    <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                        aria-hidden="true"><%=error.website  %></span>
+                                    <%}  %>
                                 </div>
                             </div>
+                            <% if (user.isProfile==='true') { %>
                             <button type="submit" class="btn btn-primary">Submit</button>
+                            <% }else{%>
+                            <button type="submit" class="btn btn-primary">Update Profile</button><% } %>
+
                         </form>
                     </div>
                 </div>

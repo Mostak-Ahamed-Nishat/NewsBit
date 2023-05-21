@@ -104,8 +104,8 @@ exports.loginPostController = async (req, res, next) => {
     //if get validation error return with error message
     if (!checkErrors.isEmpty()) {
         const error = checkErrors.mapped()
-        res.render('pages/auth/signup', {
-            title: 'NewsBit Signup',
+        res.render('pages/auth/login', {
+            title: 'Login NewsBit',
             user: user,
             error
         })
@@ -119,13 +119,13 @@ exports.loginPostController = async (req, res, next) => {
                 email: user.email
             });
         }
+
         //if user exist with this email
         if (validUser) {
             //check the password
             const checkPassword = await bcrypt.compare(password, validUser.password).then(res => res)
             //If the password is correct
             if (checkPassword) {
-
                 //Set login user true
                 req.session.isLoggedIn = true
                 req.session.user = {
@@ -136,16 +136,10 @@ exports.loginPostController = async (req, res, next) => {
                     createdAt: validUser.createdAt,
                     updatedAt: validUser.updatedAt
                 }
-                req.session.save(err=>{
-                    if(err){
-                        err.status = 500
-                        next(err)
-                    }else{
-                        res.redirect('/profile')
-                    }
-                })
-                //  console.log(res.session.user);
-               
+
+                res.redirect('/dashboard')
+
+
             } else {
                 //If password is incorrect
                 res.render('pages/auth/login', {
@@ -185,3 +179,12 @@ exports.logoutController = (req, res, next) => {
         res.redirect('/auth/login')
     })
 }
+
+// req.session.save(err=>{
+//     if(err){
+//         err.status = 500
+//         next(err)
+//     }else{
+
+//     }
+// })

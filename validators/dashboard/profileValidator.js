@@ -2,6 +2,8 @@ const {
     body
 } = require('express-validator')
 
+const validator = require('validator')
+
 const linkValidator = value => {
     if (value) {
         if (!validator.isURL(value)) {
@@ -10,11 +12,13 @@ const linkValidator = value => {
     }
     return true
 }
+
 module.exports = [
-    body('fullName').not().isEmpty().withMessage('Full Name is required').isLength({
+    body('fName').not().isEmpty().withMessage('First Name is required').isLength({
         min: 3,
         max: 15
-    }).withMessage('Name should be at least 3 characters').trim(), 
+    }).withMessage('Name should be at least 3 characters').trim(),
+    body('lName').trim(),
     body('title')
     .not().isEmpty().withMessage('Title is required').isLength({
         max: 100

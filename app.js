@@ -41,6 +41,7 @@ app.use((error,req,res,next)=>{
             title:'Page not found',
         })//set not found page******
     }else{
+        console.log(error.message);
         res.render('pages/500',{
             title:'Server error',
         }) //set server side error page******

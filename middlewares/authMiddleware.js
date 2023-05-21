@@ -16,15 +16,11 @@ authMiddleware.bindMiddleware = (req, res, next) => {
         try {
             
             //If there is a user in session
-            
-            const isUser = User.findOne({
-                _id: req.session._id //this will return the user that is logged in through express-session
-            })
-
+            const isUser = await User.findById(req.session.user.id)
             if (isUser) {
                 req.user = isUser
             }
-
+            
             next()
         }
         catch (error) {
@@ -41,6 +37,7 @@ authMiddleware.isAuthenticated = (req,res,next)=>{
     if(!req.session.isLoggedIn) {
         return res.redirect('/auth/login')
     }
+
     next()
 }
 

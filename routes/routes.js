@@ -8,7 +8,7 @@ const routes = [{
         handler: authRoute
     },
     {
-        path: '/profile',
+        path: '/dashboard',
         handler: dashboardRoute
     },
     {

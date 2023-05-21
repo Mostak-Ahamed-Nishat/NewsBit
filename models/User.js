@@ -26,7 +26,7 @@ const userSchema = new Schema({
     },
     profilePic: {
         type: String,
-        default: "/uploads/profile/default.png",
+        default: "/backend/uploads/user.png",
     }
 }, {
     timestamps: true

@@ -18,7 +18,6 @@ const profileSchema = new Schema({
     lastName: {
         type: String,
         trim: true,
-        required: true,
         maxlength: 255,
     },
     title: {
@@ -50,11 +49,11 @@ const profileSchema = new Schema({
             trim: true
         },
     },
-    post: {
+    posts: [{
         type: Schema.Types.ObjectId,
         ref: 'Post'
-    },
-    bookmark: [{
+    }],
+    bookmarks: [{
         type: Schema.Types.ObjectId,
         ref: 'Post'
     }],
@@ -62,5 +61,5 @@ const profileSchema = new Schema({
     timestamps: true
 })
 
-const Profile=mongoose.model('Profile',profileSchema);
+const Profile = mongoose.model('Profile', profileSchema);
 module.exports = Profile;
