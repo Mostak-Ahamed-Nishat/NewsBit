@@ -21,25 +21,27 @@
                 <div class="dashboard-area">
                     <!-- Card Start -->
                     <div class="card p-5">
-                        <form>
 
-                            <div class="form-group">
-                                <img src="../../../public/backend/uploads/user.png" style="height: 300px; width: 300px;" alt="Profile Pics" class="img-thumbnail img-fluid"
-                                    id="profilePics"> <br>
-                                <form action="/uploads/profilePics" class="my-4" id="profilePicsForm">
-                                    
-                                    <input type="file" class="my-2"  name="profilePics" id="profilePicsFile" accept="img/*">
-                                    <!-- User code -->
-                              
-                                    <input type="button" class="btn btn-danger" id="removeProfilePics"
-                                        value="Remove Pic">
-                                </form>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <img src="../../../public/backend/uploads/user.png"
+                                        style="height: 300px; width: 300px;" alt="Profile Pics"
+                                        class="img-thumbnail img-fluid" id="profilePics"> <br>
+                                    <form action="/uploads/profilePics" class="my-4" id="profilePicsForm">
+                                        <input type="file" class="my-2" name="profilePics" id="profilePicsFile"
+                                            accept="img/*">
+                                        <input type="button" class="btn btn-danger" id="removeProfilePics"
+                                            value="Remove Pic">
+                                    </form>
+                                </div>
                             </div>
+                        </div>
 
-
+                        <form method="POST" action="/profile/create-profile">
                             <div class="form-group">
                                 <label for="fname">Full Name</label>
-                                <input type="text" class="form-control" id="fname" aria-describedby="fname">
+                                <input type="text" class="form-control" id="fullName" aria-describedby="fullName">
                                 <!-- <small id="fname" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
 
@@ -54,7 +56,7 @@
 
                             <div class="form-group">
                                 <label for="bio">Bio</label>
-                                <input type="text" class="form-control" id="bio">
+                                <input type="text" class="form-control" id="bio" name="bio">
                             </div>
                             <!-- facebook -->
                             <div class="form-group">
@@ -63,7 +65,7 @@
                                         <i class="fa-brands fa-facebook"></i>
                                     </span>
                                     <input type="text" class="form-control" placeholder="Facebook Link"
-                                        name="facebook" />
+                                        name="facebook" id="facebook"/>
                                     <!-- Error message -->
                                 </div>
                             </div>
@@ -74,7 +76,7 @@
                                         <i class="fa-brands fa-twitter"></i>
                                     </span>
                                     <input type="text" class="form-control" id="twitter" placeholder="Twitter Link"
-                                        name="twitter" />
+                                        name="twitter" id="twitter" />
                                     <!-- -->
                                 </div>
                             </div>
@@ -85,7 +87,7 @@
                                         <i class="fa-brands fa-github"></i>
                                     </span>
                                     <input type="text" class="form-control" placeholder="Github Link" id="github"
-                                        name="github" />
+                                        name="github" id="github"/>
                                     <!-- -->
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 // const router=require('express').Router();
 const authRoute = require('./authRoute')
-const profileRoute = require('./profileRoute')
+const dashboardRoute = require('./dashboardRoute')
 
 
 const routes = [{
@@ -9,7 +9,7 @@ const routes = [{
     },
     {
         path: '/profile',
-        handler: profileRoute
+        handler: dashboardRoute
     },
     {
         path: '/',
