@@ -5,7 +5,10 @@ const {
 
 const User = require('../models/User')
 const Profile = require('../models/Profile')
+const bcrypt = require('bcrypt');
 
+
+//dashboard Object
 const dashboard = {}
 
 dashboard.dashboardGetController = (req, res, next) => {
@@ -27,7 +30,7 @@ dashboard.createProfileGetController = async (req, res, next) => {
             lastName,
             title,
             bio,
-            links:{
+            links: {
                 ...links
             }
         } = userProfile
@@ -161,9 +164,6 @@ dashboard.updateProfilePostController = async (req, res, next) => {
 
 
             if (user) {
-
-                console.log(facebook);
-
                 await Profile.findOneAndUpdate({
                     user: req.user._id
                 }, {
@@ -190,5 +190,62 @@ dashboard.updateProfilePostController = async (req, res, next) => {
     }
 
 }
+
+dashboard.passwordChangeGetController = async (req, res, next) => {
+    res.render('pages/dashboard/password', {
+        title: 'Change Password',
+        error: {}
+    })
+}
+
+dashboard.passwordChangePostController = async (req, res, next) => {
+
+    const {
+        previousPassword,
+        newPassword,
+        confirmPassword
+    } = req.body
+    console.log(req.user);
+
+    const errors = validationResult(req).formatWith(validationErrorFormatter)
+
+    if (!errors.isEmpty()) {
+        const error = errors.mapped()
+        res.render('pages/dashboard/password', {
+            title: 'Change Password',
+            error
+        })
+    } else {
+
+        if (req.user) {
+
+            bcrypt.compare(previousPassword, req.user.password, async (err, result) => {
+                if (err) {
+                    res.render('pages/dashboard/password', {
+                        title: 'Change Password',
+                        error: {
+                            previousPassword: 'Previous Password does not match'
+                        }
+                    })
+                } else {
+
+                    const updatedPassword =await bcrypt.hash(newPassword, 10)
+                    await User.findOneAndUpdate({
+                        _id: req.user._id,
+                    }, {
+                        $set: {
+                            password: updatedPassword
+                        }
+                    })
+
+                    res.redirect('/dashboard')
+
+                }
+            })
+
+        }
+    }
+}
+
 
 module.exports = dashboard
