@@ -228,7 +228,6 @@ dashboard.passwordChangePostController = async (req, res, next) => {
                         }
                     })
                 } else {
-
                     const updatedPassword =await bcrypt.hash(newPassword, 10)
                     await User.findOneAndUpdate({
                         _id: req.user._id,
@@ -237,9 +236,7 @@ dashboard.passwordChangePostController = async (req, res, next) => {
                             password: updatedPassword
                         }
                     })
-
                     res.redirect('/dashboard')
-
                 }
             })
 

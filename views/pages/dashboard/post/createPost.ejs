@@ -1,0 +1,60 @@
+<!-- Include Profile header -->
+<%- include('../../../partials/dashboard/dashboardHeader.ejs') %>
+
+<script type="application/javascript" src="/tinymce/tinymce.min.js"></script>
+
+<!-- Script element sourcing the TinyMCE configuration -->
+<script type="application/javascript" src="/backend/scripts/tinymce/tinymce-config.js"></script>
+<section id="about-us" class="py-5">
+    <div class="container">
+        <div class="row">
+            <!--left sidebar-->
+            <%- include('../../../partials/dashboard/dashboardSidebar.ejs') %>
+            <!--Body Content Content-->
+            <div class="col-md-9">
+                <div>
+                    <div class="mr-auto">
+                        <h2 class="mb-3">
+                            Create Post
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="dashboard-area">
+                    <!-- Card Start -->
+                    <div class="card p-5">
+                        <form method="POST" action="" enctype="multipart/form-data">
+
+                            <div class="form-group mb-3">
+                                <label for="title">Enter Your Post Title</label>
+                                <input type="text" name="title" id="title" class="form-control" value="" placeholder="Post Title">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="postBody">Post Body</label>
+                                <textarea type="text" class="form-control" id="postBody" name="postBody"
+                                    aria-describedby="postBody"></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="tags">Enter Some Tags (Max 10)</label>
+                                <input type="text" name="tags" id="tags" class="form-control"
+                                    placeholder="tag1,tag2,tag3"></input>
+                            </div>
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFile">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" name="post-thumbnail" class="custom-file-input">
+                                    <label for="inputGroupFile" class="custom-file-label">Choose File</label>
+                                </div>
+                            </div>
+                            <div class="mb-4"></div>
+                            <button type="submit" class="btn btn-primary">Create Post</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -3,12 +3,13 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose');
 const middleware=require('./middlewares/middlewares')
+const path = require('path')
 //Internal Import Files
 const allRoutes = require('./routes/routes')
 
 //Middleware*****
 middleware(app)
-
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //Setting View Engine
 app.set('view engine', 'ejs')

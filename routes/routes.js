@@ -1,4 +1,5 @@
 // const router=require('express').Router();
+const  postController  = require('../controllers/postController')
 const authRoute = require('./authRoute')
 const dashboardRoute = require('./dashboardRoute')
 
@@ -10,6 +11,10 @@ const routes = [{
     {
         path: '/dashboard',
         handler: dashboardRoute
+    },
+    {
+        path: '/post',
+        handler: postController
     },
     {
         path: '/',
