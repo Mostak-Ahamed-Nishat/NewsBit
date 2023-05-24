@@ -1,5 +1,9 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css"
+    integrity="sha512-2eMmukTZtvwlfQoG8ztapwAH5fXaQBzaMqdljLopRSA0i6YKM8kBAOrSSykxu9NN9HrtD45lIqfONLII2AFL/Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Include Profile header -->
 <%- include('../../partials/dashboard/dashboardHeader.ejs') %>
+
 
 <section id="about-us" class="py-5">
     <div class="container">
@@ -23,17 +27,16 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <img src="../../../public/backend/uploads/user.png"
-                                        style="height: 300px; width: 300px;" alt="Profile Pics"
-                                        class="img-thumbnail img-fluid" id="profilePic"> <br>
-                                    <form action="/uploads/profilePics" class="my-4" id="profilePicsForm" enctype="multipart/form-data">
-                                        <input type="file" class="my-2" name="profilePic" id="profilePic"
-                                            accept="img/*">
-
-                                        <input type="button" class="btn btn-danger" id="removeProfilePics"
-                                            value="Remove Pic">
-                                        <!-- style:"display:userprofilePicincludedefaultpngnoneblock" -->
-                                    </form>
+                                    <div class="prolfe-pic">
+                                        <img src="<%=user.profilePic%>" style="height: 250px;width: 250px;"
+                                            alt="Profile Pics" class="img-thumbnail img-fluid" id="">
+                                        <form action="/uploads/profilePic" class="my-2" id="profilePicForm">
+                                            <input type="file" name="profilePicFile" id="profilePicFile" accept="img/*">
+                                            <!-- User code -->
+                                            <input type="button" class="btn btn-danger" id="removeProfilePic"
+                                                value="Remove Pic">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -154,4 +157,36 @@
             </div>
         </div>
     </div>
+
+
+    <!-- ------------------------------------ -->
+    <!-- Modal -->
+    <div class="modal hide fade bd-example-modal-lg" id="crop-modal" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalCenterTitle">Resize Your Image</h1>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="cropped-image"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancel-cropping"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="upload-image">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
+
+<script src="/backend/scripts/profilePicUpload.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"
+    integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>

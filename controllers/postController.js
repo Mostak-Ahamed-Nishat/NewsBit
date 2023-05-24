@@ -1,11 +1,11 @@
 //Dependance
-const router = require('express').Router()
 
+const post = {}
 
-router.get('', (req, res, next) => {
-    res.render('pages/dashboard/post/createPost',{
-        title:'Create a new post',
+post.getPostPageController = (req, res, next) => {
+    res.render('pages/dashboard/post/createPost', {
+        title: 'Create a new post',
     })
-})
+}
 
-module.exports = router
+module.exports = post

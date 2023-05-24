@@ -24,6 +24,7 @@ dashboard.createProfileGetController = async (req, res, next) => {
         user: req.user._id
     })
 
+    let profilePic=req.user.profilePic
     if (userProfile) {
         let {
             firstName,
@@ -42,6 +43,7 @@ dashboard.createProfileGetController = async (req, res, next) => {
                 lName: lastName,
                 title,
                 bio,
+                profilePic,
                 facebook: links.facebook,
                 twitter: links.twitter,
                 github: links.github,
@@ -55,6 +57,7 @@ dashboard.createProfileGetController = async (req, res, next) => {
         res.render('pages/dashboard/profile', {
             title: 'Create Profile',
             user: {
+                profilePic,
                 email: req.user.email,
                 isProfile: false
             },

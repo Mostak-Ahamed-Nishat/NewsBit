@@ -1,5 +1,6 @@
 // const router=require('express').Router();
-const  postController  = require('../controllers/postController')
+const postRoute = require('./postRoute')
+const uploadRoute = require('./uploadRoute')
 const authRoute = require('./authRoute')
 const dashboardRoute = require('./dashboardRoute')
 
@@ -14,7 +15,11 @@ const routes = [{
     },
     {
         path: '/post',
-        handler: postController
+        handler: postRoute
+    },
+     {
+        path: '/uploads',
+        handler: uploadRoute
     },
     {
         path: '/',
@@ -26,6 +31,8 @@ const routes = [{
     }
 ]
 
+
+ 
 
 module.exports = (app) => {
     routes.forEach(route => {
