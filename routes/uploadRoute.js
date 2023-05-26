@@ -1,6 +1,7 @@
 const router = require('express').Router()
+
 const {
-    uploadProfilePic
+    uploadProfilePicController
 } = require('../controllers/uploadController')
 
 const {
@@ -9,7 +10,7 @@ const {
 
 const upload = require('../middlewares/uploadMiddleware')
 
-
-router.post('/profilePic', isAuthenticated, upload.single('profilePic'), uploadProfilePic)
+//profilePicFile is a name not id
+router.post('/profilePic', isAuthenticated, upload.single('profilePic'), uploadProfilePicController)
 
 module.exports = router

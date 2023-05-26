@@ -29,9 +29,11 @@
                                 <div class="form-group">
                                     <div class="prolfe-pic">
                                         <img src="<%=user.profilePic%>" style="height: 250px;width: 250px;"
-                                            alt="Profile Pics" class="img-thumbnail img-fluid" id="">
-                                        <form action="/uploads/profilePic" class="my-2" id="profilePicForm">
-                                            <input type="file" name="profilePicFile" id="profilePicFile" accept="img/*">
+                                            alt="Profile Pics" class="img-thumbnail img-fluid" id="profilePic">
+                                        <!-- profilePic -->
+                                        <form action="/uploads/profilePic" class="my-2" id="profilePicForm"
+                                            enctype="multipart/form-data">
+                                            <input type="file" name="profilePic" id="profilePicFile" accept="img/*">
                                             <!-- User code -->
                                             <input type="button" class="btn btn-danger" id="removeProfilePic"
                                                 value="Remove Pic">

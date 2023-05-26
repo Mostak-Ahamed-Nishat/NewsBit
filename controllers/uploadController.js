@@ -5,8 +5,7 @@ const User = require("../models/User")
 
 const upload = {}
 
-upload.uploadProfilePic = async (req, res, next) => {
-
+upload.uploadProfilePicController = async (req, res, next) => {
     if (req.file) {
         //check this user has already profile or not
         try {
@@ -22,7 +21,7 @@ upload.uploadProfilePic = async (req, res, next) => {
                     user: req.user._id,
                 }, {
                     $set: {
-                        profilePice
+                        profilePic
                     }
                 })
             }
@@ -46,7 +45,7 @@ upload.uploadProfilePic = async (req, res, next) => {
             })
         }
 
-    }else{
+    } else {
         res.status(500).json({
             profilePic: '/backend/uploads/default.png'
         })
