@@ -15,10 +15,8 @@ window.onload = function () {
 
 
     //get the file from the HTML file element
-
     function readableFile(file) {
         let reader = new FileReader();
-
         reader.onload = function (event) {
             baseCropping.croppie('bind', {
                 url: event.target.result
@@ -48,6 +46,7 @@ window.onload = function () {
 
     })
 
+    //Cancel the modal
     $('#cancel-cropping').on('click', function () {
         $('#crop-modal').modal('hide')
     })
@@ -55,27 +54,31 @@ window.onload = function () {
 
     $('#upload-image').on('click', async function () {
         try {
-            //upload the result what we get from baseCropping.And mention blob as we want to get the result as it(blob).
-            //Then We will get a promise and will get the blob
 
             baseCropping.croppie('result', 'blob').then(blob => {
+                    //crete a form for upload image
                     let formData = new FormData()
-                    //get the file from input
-                    let file = document.getElementById('profilePicFile').files[0]
-                    // let name = generateFileName(file.name)
-                    //FormData is a data what we will send to the server
-                    formData.append('profilePic', blob, file.name)
-                    // console.log(formData.getAll('profilePic'));
 
+                    //get the file from image filed
+                    let file = document.getElementById('profilePicFile').files[0]
+
+                    //Append the file data with from
+                    formData.append('profilePic', blob, file.name)
+
+                    //Create a header request
                     let headers = new Headers()
+
+                    //Set the request type
                     headers.append('Accept', 'Application/JSON')
 
+                    //Prepare the post request
                     let req = new Request('/uploads/profilePic', {
                         method: 'POST',
                         headers,
                         mode: 'cors',
                         body: formData
                     })
+                    //send a fetch request which will return a promise
                     return fetch(req) //This fetch will return a promise
                 })
 
@@ -98,16 +101,19 @@ window.onload = function () {
         }
     })
 
+
+    // To remove the profile pic
     $('#removeProfilePic').on('click', function () {
         let req = new Request('/uploads/profilePic', {
             method: 'DELETE',
             mode: 'cors'
         })
-
+        
         fetch(req)
             .then(res => res.json())
             .then(data => {
-                // document.getElementById('removeProfilePics').style.display = 'block'
+                console.log(data);
+                document.getElementById('removeProfilePic').style.display = 'block'
                 document.getElementById('profilePic').src = data.profilePic
                 document.getElementById('profilePicForm').reset()
             })

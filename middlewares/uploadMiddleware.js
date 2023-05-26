@@ -23,9 +23,6 @@ const upload = multer({
         const extName = types.test(path.extname(file.originalname).toLowerCase()) // return boolean
         const mimeType = types.test(file.mimeType) // return boolean
 
-        console.log('****File:*** ');
-        console.log(file);
-
         if (extName && mimeType) {
             callback(null, true) //True means file upload korte hobe
         } else {
