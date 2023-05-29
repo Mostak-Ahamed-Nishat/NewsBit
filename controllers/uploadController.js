@@ -65,50 +65,65 @@ upload.removeProfilePicController = async (req, res, next) => {
         //Get the default profile
         let defaultProfilePic = '/backend/uploads/default.png'
 
-        //If the user has already profile remove from the profile 
-        if (profile) {
-            await Profile.findOneAndUpdate({
-                _id: req.user._id
-            }, {
-                $set: {
-                    profilePic: defaultProfilePic
-                }
-            })
-        }
-
-        //Delete the profile pic for both user who have profile or not
-        await User.findOneAndUpdate({
-            _id: req.user._id
-        }, {
-            $set: {
-                profilePic: defaultProfilePic
-            }
-        })
-
         //Remove the profile pic from file also 
+        fs.unlink(`public/${req.user.profilePic}`, async err => {
+            if (!err) {
+                //If the user has already profile remove from the profile 
+                if (profile) {
+                    await Profile.findOneAndUpdate({
+                        _id: req.user._id
+                    }, {
+                        $set: {
+                            profilePic: defaultProfilePic
+                        }
+                    })
+                }
 
-        console.log(req.user.profilePic);
+                //Delete the profile pic for both user who have profile or not
+                await User.findOneAndUpdate({
+                    _id: req.user._id
+                }, {
+                    $set: {
+                        profilePic: defaultProfilePic
+                    }
+                })
+                //Send the success request
+                res.status(200).json({
+                    user: {
+                        profilePic: defaultProfilePic,
+                    },
+                    message: 'Profile picture was successfully removed'
+                })
 
-        fs.unlink(`public/${req.user.profilePic}`, err => {
-            if (err) {
-                console.log(err.message);
+            } else {
+                res.status(500).json({
+                    message: 'File not found on the directory'
+                })
             }
         })
-
-        res.status(200).json({
-            user: {
-                profilePic: defaultProfilePic,
-            },
-            message: 'Profile picture was successfully removed'
-        })
-
 
     } catch (error) {
         console.log(error.message);
         res.status(500).json({
-            message: 'Can not remove profile picture'
+            message: 'Can not remove profile picture server error occurred'
         });
     }
 }
+
+//Post Image upload
+upload.postImageUploadController = async (req, res, next) => {
+
+    if (req.file) {
+        return res.status(200).json({
+            //Coming from tinyMCE file 
+            imgUrl: `/backend/uploads/${req.file.filename}`
+        })
+    }
+
+    return res.status(500).json({
+        message: `Server error`
+    })
+}
+
 
 module.exports = upload

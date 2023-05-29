@@ -16,21 +16,20 @@ const postSchema = new Schema({
         type: String,
         required: true,
     },
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+    },
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-        trim: true,
     },
     tags: {
         type: [String],
         required: true,
     },
     thumbnail: String,
-    category: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-    },
     readTime: String,
     likes: [{
         type: Schema.Types.ObjectId,

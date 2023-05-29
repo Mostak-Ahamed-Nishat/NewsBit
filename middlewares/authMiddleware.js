@@ -12,15 +12,12 @@ authMiddleware.bindMiddleware = (req, res, next) => {
         if (!req.session.isLoggedIn) {
             return next()
         }
-
         try {
-            
             //If there is a user in session
             const isUser = await User.findById(req.session.user.id)
             if (isUser) {
                 req.user = isUser
             }
-            
             next()
         }
         catch (error) {

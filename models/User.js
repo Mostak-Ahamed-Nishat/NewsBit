@@ -27,7 +27,12 @@ const userSchema = new Schema({
     profilePic: {
         type: String,
         default: "/backend/uploads/user.png",
-    }
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'user', 'guest'],
+        default: 'user'
+    },
 }, {
     timestamps: true
 })

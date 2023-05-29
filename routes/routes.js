@@ -2,6 +2,7 @@
 const postRoute = require('./postRoute')
 const uploadRoute = require('./uploadRoute')
 const authRoute = require('./authRoute')
+
 const dashboardRoute = require('./dashboardRoute')
 
 
@@ -14,10 +15,10 @@ const routes = [{
         handler: dashboardRoute
     },
     {
-        path: '/post',
+        path: '/posts',
         handler: postRoute
     },
-     {
+    {
         path: '/uploads',
         handler: uploadRoute
     },
@@ -32,7 +33,7 @@ const routes = [{
 ]
 
 
- 
+
 
 module.exports = (app) => {
     routes.forEach(route => {

@@ -23,7 +23,7 @@ router.post('/signup', signupValidator, signUpPostController)
 router.get('/login', loginGetController)
 
 //post Login Controller
-router.post('/login', loginPostController)
+router.post('/login',loginValidator, loginPostController)
 
 //get Logout Controller
 router.get('/logout', logoutController)

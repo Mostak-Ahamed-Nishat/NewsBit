@@ -1,7 +1,17 @@
-const { getPostPageController } = require('../controllers/postController')
-const { isAuthenticated } = require('../middlewares/authMiddleware')
-const router=require('express').Router()
+const {
+    postPageGetController,
+    postPagePostController
+} = require('../controllers/postController')
+const {
+    isAuthenticated
+} = require('../middlewares/authMiddleware')
+const postValidator = require('../validators/dashboard/post/postValidator')
+const router = require('express').Router()
 
-router.get('/',isAuthenticated,getPostPageController)
+//Post create get controller
+router.get('/', isAuthenticated, postPageGetController)
 
-module.exports=router
+//Post create Post controller
+router.post('/', isAuthenticated, postValidator, postPagePostController)
+
+module.exports = router

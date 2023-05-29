@@ -1,10 +1,7 @@
 <!-- Include Profile header -->
 <%- include('../../../partials/dashboard/dashboardHeader.ejs') %>
 
-<script type="application/javascript" src="/tinymce/tinymce.min.js"></script>
 
-<!-- Script element sourcing the TinyMCE configuration -->
-<script type="application/javascript" src="/backend/scripts/tinymce/tinymce-config.js"></script>
 <section id="about-us" class="py-5">
     <div class="container">
         <div class="row">
@@ -23,30 +20,42 @@
                 <div class="dashboard-area">
                     <!-- Card Start -->
                     <div class="card p-5">
-                        <form method="POST" action="" enctype="multipart/form-data">
+                        <form method="POST" action="/posts">
 
                             <div class="form-group mb-3">
                                 <label for="title">Enter Your Post Title</label>
-                                <input type="text" name="title" id="title" class="form-control" value="" placeholder="Post Title">
+                                <input type="text" name="title" id="title" class="form-control" value=""
+                                    placeholder="Post Title">
+                                <% if(error.title){%>
+                                <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                    aria-hidden="true"><%=error.title%></span>
+                                <%} %>
+
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="postBody">Post Body</label>
                                 <textarea type="text" class="form-control" id="postBody" name="postBody"
                                     aria-describedby="postBody"></textarea>
+                                <% if(error.postBody){%>
+                                <span class="glyphicon glyphicon-remove form-control-feedback text-danger"
+                                    aria-hidden="true"><%=error.postBody%></span>
+                                <%} %>
+
                             </div>
                             <div class="form-group mb-3">
                                 <label for="tags">Enter Some Tags (Max 10)</label>
                                 <input type="text" name="tags" id="tags" class="form-control"
                                     placeholder="tag1,tag2,tag3"></input>
                             </div>
-                            <div class="input-group my-3">
+                            <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroupFile">Upload</span>
+                                    <span class="input-group-text">Upload</span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="post-thumbnail" class="custom-file-input">
-                                    <label for="inputGroupFile" class="custom-file-label">Choose File</label>
+                                    <input type="file" class="custom-file-input" name="postThumbnail"
+                                        id="postThumbnail">
+                                    <label class="custom-file-label" for="postThumbnail">Choose file</label>
                                 </div>
                             </div>
                             <div class="mb-4"></div>
@@ -58,3 +67,8 @@
         </div>
     </div>
 </section>
+
+<script type="application/javascript" src="/tinymce/tinymce.min.js"></script>
+
+<!-- Script element sourcing the TinyMCE configuration -->
+<script type="application/javascript" src="/backend/scripts/tinymce/tinymce-config.js"></script>

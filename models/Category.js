@@ -8,6 +8,10 @@ const categorySchema = new Schema({
         type: String,
         trim: true,
     },
+    post: {
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -20,5 +24,5 @@ const categorySchema = new Schema({
     timestamps: true
 })
 
-let Category=mongoose.model('Category',categorySchema);
+let Category = mongoose.model('Category', categorySchema);
 module.exports = Category
