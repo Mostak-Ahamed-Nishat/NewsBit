@@ -1,6 +1,7 @@
 //Dependance
 const readingTime = require('reading-time');
 const Post = require('../models/Post');
+const Profile = require('../models/Profile');
 
 const {
     validationResult
@@ -21,69 +22,69 @@ post.postPageGetController = (req, res, next) => {
 
 post.postPagePostController = async (req, res, next) => {
 
-    req.toastr.success('Post created successfully')
-
-    let {
-        title,
-        tags,
-        postBody,
-    } = req.body
-
-    let postThumbnail = req.body.postThumbnail ? req.body.postThumbnail : ''
-
-
-
     try {
+        let {
+            title,
+            postBody,
+            tags,
+            postThumbnail
+        } = req.body
+
+
+
+
 
         let errors = validationResult(req).formatWith(validationErrorFormatter)
 
-        if (errors) {
+        if (!errors.isEmpty()) {
             let error = errors.mapped()
+            req.toastr.error('Validation Error')
             res.render('pages/dashboard/post/createPost', {
                 title: 'Create a new post',
                 error,
                 req
             })
-        } else {
-            //Get the reading time of the post
-            let readTime = readingTime(postBody);
-
-            //split the tags with commas
-            if (tags.length > 0) {
-                tags = tags.split(',')
-                tags.map(tag => tag.trim())
-            }
-
-
-            //If the title and body are available save to the database
-            new Post({
-                title,
-                body: postBody,
-                tags,
-                author: req.user._id,
-                thumbnail: `/backend/uploads/${postThumbnail}`,
-                readTime: readTime.text,
-                likes: [],
-                dislikes: [],
-                comments: [],
-            }).save()
-
-            // await createPost
-
-            req.toastr.success('Post created successfully')
-
-            res.render('pages/dashboard/post/createPost', {
-                title: 'Create a new post',
-                req,
-                error: {},
-            })
-
         }
 
-    } catch (error) {
-       next(error)
-    }
+        //Get the reading time of the post
+        let readTime = readingTime(postBody).text;
 
+        //Create post on database
+        let savePostToDatabase = new Post({
+            title,
+            body: postBody,
+            author: req.user._id,
+            tags,
+            thumbnail: postThumbnail === '' ? '' : `/backend/uploads/${postThumbnail}`,
+            readTime
+        })
+
+        //save post to database
+        let createdPost = await savePostToDatabase.save()
+
+        // set the post id to user profile
+
+        await Profile.findOneAndUpdate({
+            user: req.user._id
+        }, {
+            $push: {
+                'posts': createdPost._id
+            }
+        })
+
+        //set the success toaster message
+        req.toastr.success('Post created successfully')
+
+        //redirect back to post page
+        res.render('pages/dashboard/post/createPost', {
+            title: 'Create a new post',
+            error: {},
+            req
+        })
+
+    } catch (error) {
+        next(error)
+    }
 
 
 
