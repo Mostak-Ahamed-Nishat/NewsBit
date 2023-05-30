@@ -4,6 +4,9 @@ module.exports = () => {
             res.locals.user = req.user
             res.locals.isLoggedIn = req.session.isLoggedIn || false
         }
+
+        // res.locals.toastr = req.toastr.render()
+
         next()
     }
 

@@ -13,7 +13,8 @@ const dashboard = {}
 
 dashboard.dashboardGetController = (req, res, next) => {
     res.render('pages/dashboard/dashboard', {
-        title: 'Dashboard'
+        title: 'Dashboard',
+        req:{}
     })
 }
 //Get create profile page

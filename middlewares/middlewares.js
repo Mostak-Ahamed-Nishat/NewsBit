@@ -3,10 +3,14 @@ const express = require('express')
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session); //For store session to database
 const flash = require('connect-flash');
+const cookieParser = require('cookie-parser')
+const toastr = require('express-toastr');
+//inside dependencies
 const {
     bindMiddleware
 } = require('./authMiddleware');
 const setLocals = require('./setLocals');
+
 // multer
 // const multer  = require('multer')
 // const upload = multer({ dest: 'uploads/' })
@@ -34,7 +38,9 @@ const middleware = [
         saveUninitialized: false,
         store: store
     }),
+    cookieParser('secret'),
     flash(),
+    toastr(),
     bindMiddleware(),
     setLocals()
 ]
